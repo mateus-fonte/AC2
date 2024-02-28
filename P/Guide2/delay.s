@@ -15,6 +15,7 @@ main:
     li $t3, 20000
     li $t4, 100
     mul $t5, $t3, $t4
+    move $t6, $t5
 
 
 while:
@@ -50,7 +51,8 @@ while:
     syscall
 
     beq $v0, 0x00000041, A_pressed
-    beq $v0, 0x00000041, A_pressed
+    beq $v0, 0x0000004E, N_pressed
+    beq $v0, 0x00000053, S_pressed
 
 delay:
 
@@ -89,6 +91,22 @@ A_pressed:
     div $t5, $t5, 2
 
     j delay
+
+N_pressed:
+
+    move $t5, $t6
+
+    j delay
+
+S_pressed:
+
+    li $v0, INKEY
+    syscall
+
+    beq $v0, 0x00000052, delay
+
+    j S_pressed
+
 
     jr $ra
 
